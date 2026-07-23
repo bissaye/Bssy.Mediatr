@@ -20,6 +20,9 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release
 
+      - name: Test
+        run: dotnet test --configuration Release --no-build
+
       - name: Check version bump
         run: |
           BRANCH_VERSION=$(grep -oP '(?<=<Version>)[^<]+' Bssy.Mediatr.Core/Bssy.Mediatr.Core.csproj)
