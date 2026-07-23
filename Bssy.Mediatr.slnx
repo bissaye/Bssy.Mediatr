@@ -1,3 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="Bssy.Mediatr.Core.Tests/Bssy.Mediatr.Core.Tests.csproj" Id="806e1a58-4c80-4253-9279-db9ec1e4f19e" />
   <Project Path="Bssy.Mediatr.Core/Bssy.Mediatr.Core.csproj" />
 </Solution>
