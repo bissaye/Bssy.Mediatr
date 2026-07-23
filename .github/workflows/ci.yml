@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    name: Build & version check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Check version bump
+        run: |
+          BRANCH_VERSION=$(grep -oP '(?<=<Version>)[^<]+' Bssy.Mediatr.Core/Bssy.Mediatr.Core.csproj)
+          MAIN_VERSION=$(git show origin/main:Bssy.Mediatr.Core/Bssy.Mediatr.Core.csproj | grep -oP '(?<=<Version>)[^<]+')
+          echo "Version PR   : $BRANCH_VERSION"
+          echo "Version main : $MAIN_VERSION"
+          if [ "$BRANCH_VERSION" = "$MAIN_VERSION" ]; then
+            echo "Erreur : la version doit etre mise a jour avant de merger dans main."
+            exit 1
+          fi
